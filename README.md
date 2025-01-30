@@ -14,5 +14,5 @@ If you are not sure about the script, you can use this sandbox to test it before
 # One click install (recommended)
 
 ```
-wget -N https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh && bash install.sh
+wget -N https://raw.githubusercontent.com/socksprox/V2bX-script/master/install.sh && bash install.sh
 ```
