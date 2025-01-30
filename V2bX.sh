@@ -28,7 +28,7 @@ elif cat /proc/version | grep -Eqi "centos|red hat|redhat|rocky|alma|oracle linu
 elif cat /proc/version | grep -Eqi "arch"; then
     release="arch"
 else
-    echo -e "${red}未检测到系统版本，请联系脚本作者！${plain}\n" && exit 1
+    echo -e "${red}System version not detected, please contact script author！${plain}\n" && exit 1
 fi
 
 # os version
@@ -91,7 +91,7 @@ confirm_restart() {
 }
 
 before_show_menu() {
-    echo && echo -n -e "${yellow}按回车返回主菜单: ${plain}" && read temp
+    echo && echo -n -e "${yellow}Press ENTER to return to main menu: ${plain}" && read temp
     show_menu
 }
 
@@ -108,13 +108,13 @@ install() {
 
 update() {
     if [[ $# == 0 ]]; then
-        echo && echo -n -e "输入指定版本(默认最新版): " && read version
+        echo && echo -n -e "Enter the specified version (default latest version): " && read version
     else
         version=$2
     fi
     bash <(curl -Ls https://raw.githubusercontent.com/wyx2685/V2bX-script/master/install.sh) $version
     if [[ $? == 0 ]]; then
-        echo -e "${green}更新完成，已自动重启 V2bX，请使用 V2bX log 查看运行日志${plain}"
+        echo -e "${green}The update is complete, V2bX has been restarted automatically, please use V2bX log to check the runtime logs${plain}"
         exit
     fi
 
@@ -124,7 +124,7 @@ update() {
 }
 
 config() {
-    echo "V2bX在修改配置后会自动尝试重启"
+    echo "V2bX automatically tries to reboot after a configuration change"
     vi /etc/V2bX/config.json
     sleep 2
     restart
@@ -134,7 +134,7 @@ config() {
             echo -e "V2bX状态: ${green}已运行${plain}"
             ;;
         1)
-            echo -e "检测到您未启动V2bX或V2bX自动重启失败，是否查看日志？[Y/n]" && echo
+            echo -e "Detected that you did not start V2bX or V2bX failed to restart automatically, you check the logs? [Y/n]" && echo
             read -e -rp "(默认: y):" yn
             [[ -z ${yn} ]] && yn="y"
             if [[ ${yn} == [Yy] ]]; then
@@ -142,12 +142,12 @@ config() {
             fi
             ;;
         2)
-            echo -e "V2bX状态: ${red}未安装${plain}"
+            echo -e "V2bX Status: ${red}uninstalled${plain}"
     esac
 }
 
 uninstall() {
-    confirm "确定要卸载 V2bX 吗?" "n"
+    confirm "Are you sure you want to uninstall V2bX?" "n"
     if [[ $? != 0 ]]; then
         if [[ $# == 0 ]]; then
             show_menu
@@ -169,7 +169,7 @@ uninstall() {
     rm /usr/local/V2bX/ -rf
 
     echo ""
-    echo -e "卸载成功，如果你想删除此脚本，则退出脚本后运行 ${green}rm /usr/bin/V2bX -f${plain} 进行删除"
+    echo -e "Uninstallation was successful, if you want to remove this script, exit the script and run the ${green}rm /usr/bin/V2bX -f${plain} for deletion"
     echo ""
 
     if [[ $# == 0 ]]; then
@@ -181,7 +181,7 @@ start() {
     check_status
     if [[ $? == 0 ]]; then
         echo ""
-        echo -e "${green}V2bX已运行，无需再次启动，如需重启请选择重启${plain}"
+        echo -e "${green}V2bX is already running, no need to start it again, if you need to reboot please select Reboot${plain}"
     else
         if [[ x"${release}" == x"alpine" ]]; then
             service V2bX start
@@ -191,9 +191,9 @@ start() {
         sleep 2
         check_status
         if [[ $? == 0 ]]; then
-            echo -e "${green}V2bX 启动成功，请使用 V2bX log 查看运行日志${plain}"
+            echo -e "${green}V2bX started successfully, please use V2bX log to view the runtime logs.${plain}"
         else
-            echo -e "${red}V2bX可能启动失败，请稍后使用 V2bX log 查看日志信息${plain}"
+            echo -e "${red}V2bX may have failed to start, please use V2bX log to check the log information later!${plain}"
         fi
     fi
 
@@ -230,9 +230,9 @@ restart() {
     sleep 2
     check_status
     if [[ $? == 0 ]]; then
-        echo -e "${green}V2bX 重启成功，请使用 V2bX log 查看运行日志${plain}"
+        echo -e "${green}V2bX The reboot was successful, please use V2bX log to view the runtime logs${plain}"
     else
-        echo -e "${red}V2bX可能启动失败，请稍后使用 V2bX log 查看日志信息${plain}"
+        echo -e "${red}V2bXThe startup may fail, please check the log information with V2bX log later!${plain}"
     fi
     if [[ $# == 0 ]]; then
         before_show_menu
