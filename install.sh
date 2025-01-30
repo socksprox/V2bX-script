@@ -145,7 +145,7 @@ install_V2bX() {
         fi
     else
         last_version=$1
-        url="https://github.com/wyx2685/socksprox/releases/download/${last_version}/V2bX-linux-${arch}.zip"
+        url="https://github.com/socksprox/V2bX/releases/download/${last_version}/V2bX-linux-${arch}.zip"
         echo -e "Start Installation V2bX $1"
         wget -q -N --no-check-certificate -O /usr/local/V2bX/V2bX-linux.zip ${url}
         if [[ $? -ne 0 ]]; then
